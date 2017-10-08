@@ -1,36 +1,15 @@
 var ID = 0;
 
-function getUtilsByRequire(require) {
-    var remark = require('remark');
-    var remarkHtml = require('remark-html')
+function getUtils(metaData, gift, require) {
+    var getHTML = gift.getHTML;
+    var filename = gift.filename;
+    var markdown = gift.content;
+
     var cheerio = require('cheerio');
 
     return {
-        md2HTML: function (md, opt) {
-            opt = Object.assign({slug: false}, opt);
-            var uses = [remarkHtml];
-            if (opt.slug) {
-                uses.push(require('remark-slug'))
-            }
-
-            return new Promise(function (resolve, reject) {
-                uses.reduce(function (remark, middle) {
-                    return remark.use(middle)
-                }, remark())
-                    .process(md, function (err, file) {
-                        if (err) {
-                            console.error(err);
-                            resolve();
-                        }
-                        else {
-                            resolve(file.contents);
-                        }
-                    })
-            })
-        },
         md2Toc: function (md) {
-            return this
-                .md2HTML(md, {slug: true})
+            return getHTML()
                 .then(function (html) {
                     var id = 'cheerio-' + (ID++);
                     html = '<' + id + '>' + html + '</' + id + '>'
@@ -81,10 +60,11 @@ function getUtilsByRequire(require) {
                     })
 
                     return toc;
-                }).catch(console.error)
+                })
+                .catch(console.error)
         }
     }
 }
 
 
-module.exports = getUtilsByRequire;
+module.exports = getUtils;
