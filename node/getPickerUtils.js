@@ -8,9 +8,12 @@ function getUtils(metaData, gift, require) {
     var cheerio = require('cheerio');
 
     return {
-        md2Toc: function (md) {
-            return getHTML()
+        getToc: function (html) {
+            var prom = !html ? getHTML() : Promise.resolve(html);
+
+            return prom
                 .then(function (html) {
+                  // console.log(html);
                     var id = 'cheerio-' + (ID++);
                     html = '<' + id + '>' + html + '</' + id + '>'
                     var dom = cheerio.load(html)(id);
