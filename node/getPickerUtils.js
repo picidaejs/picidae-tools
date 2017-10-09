@@ -17,7 +17,7 @@ function getUtils(metaData, gift, require) {
                   // console.log(html);
                   var id = 'cheerio-' + (ID++);
                   html = '<' + id + '>' + html + '</' + id + '>'
-                  var dom = cheerio.load(html)(id);
+                  var dom = cheerio.load(html, {decodeEntities: false})(id);
                   // console.log(html, dom.html())
                   var toc = [], par = null
                   dom.children(':header').map(function () {
