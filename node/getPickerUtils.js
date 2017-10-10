@@ -1,11 +1,10 @@
 var ID = 0;
+var cheerio = require('cheerio');
 
 function getUtils(metaData, gift, require) {
     var getMarkdownData = gift.getMarkdownData;
     var filename = gift.filename;
     var markdown = gift.content;
-
-    var cheerio = require('cheerio');
 
     return {
         getToc: function (html) {
@@ -17,7 +16,7 @@ function getUtils(metaData, gift, require) {
                   // console.log(html);
                   var id = 'cheerio-' + (ID++);
                   html = '<' + id + '>' + html + '</' + id + '>'
-                  var dom = cheerio.load(html, {decodeEntities: true})(id);
+                  var dom = cheerio.load(html, {decodeEntities: false})(id);
                   // console.log(html, dom.html())
                   var toc = [], par = null
                   dom.children(':header').map(function () {
