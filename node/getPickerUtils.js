@@ -24,7 +24,7 @@ function getUtils(metaData, gift, require) {
                       var tagName = self.prop('tagName');
                       var dep = Number(tagName.replace(/^h/i, ''));
                       var id = self.attr('id');
-                      var val = self.html();
+                      var val = self.text();
                       var node = {dep: dep, id: id, val: val};
 
                       if (par) {
